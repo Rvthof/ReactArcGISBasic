@@ -1,0 +1,42 @@
+{
+  "name": "arcgis",
+  "widgetName": "ArcGIS",
+  "version": "1.0.0",
+  "description": "A basic ArcGIS pluggable widget",
+  "copyright": "2020 Mendix Technology BV",
+  "author": "Joe Robertson",
+  "config": {
+    "projectPath": "./tests/testProject/",
+    "mendixHost": "http://localhost:8080",
+    "developmentPort": "3000"
+  },
+  "packagePath": "mendix",
+  "scripts": {
+    "start": "pluggable-widgets-tools start:server --open",
+    "dev": "pluggable-widgets-tools start:web",
+    "build": "pluggable-widgets-tools build:web",
+    "lint": "pluggable-widgets-tools lint",
+    "lint:fix": "pluggable-widgets-tools lint:fix",
+    "prerelease": "npm run lint",
+    "release": "pluggable-widgets-tools release:web"
+  },
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@arcgis/webpack-plugin": "^4.18.0",
+    "@mendix/pluggable-widgets-tools": "^8.14.0",
+    "@types/big.js": "^4.0.5",
+    "@types/classnames": "^2.2.4",
+    "@types/react": "^16.9.56",
+    "@types/react-dom": "~16.9.0",
+    "dojo": "^1.16.4",
+    "file-loader": "^6.2.0",
+    "webpack": "^5.31.0",
+    "webpack-cli": "^4.6.0"
+  },
+  "dependencies": {
+    "@arcgis/core": "^4.18.1",
+    "classnames": "^2.2.6",
+    "fibers": "^4.0.3",
+    "npc": "0.0.1"
+  }
+}
