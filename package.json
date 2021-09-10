@@ -28,15 +28,15 @@
     "@types/classnames": "^2.2.4",
     "@types/react": "^16.9.56",
     "@types/react-dom": "~16.9.0",
+    "copy-webpack-plugin": "^6.2.1",
     "dojo": "^1.16.4",
     "file-loader": "^6.2.0",
-    "webpack": "^5.31.0",
-    "webpack-cli": "^4.6.0"
+    "webpack": "^5.52.0",
+    "webpack-cli": "^4.6.0",
+    "webpack-merge": "^4.2.2"
   },
   "dependencies": {
-    "@arcgis/core": "^4.18.1",
-    "classnames": "^2.2.6",
-    "fibers": "^4.0.3",
-    "npc": "0.0.1"
+    "@arcgis/core": "^4.1.1",
+    "classnames": "^2.2.6"
   }
 }

@@ -8,9 +8,48 @@
     <icon/>
     <properties>
         <propertyGroup caption="General">
-            <property key="sampleText" type="string" required="false">
-                <caption>Default value</caption>
-                <description>Sample text input</description>
+            <property key="apiKey" type="string" required="true">
+                <caption>API Key</caption>
+                <description>API Key for ESRI</description>
+            </property>
+            <property key="defaultZoom" type="integer" required="true" defaultValue="12">
+                <caption>Default Zoom</caption>
+                <description>Default Zoom level of map</description>
+            </property>
+            <property key="basemap" type="string" required="true" defaultValue="streets-vector">
+                <caption>Basemapm</caption>
+                <description>The name of the basemap you want to use</description>
+            </property>
+        </propertyGroup>
+        <propertyGroup caption="Data">
+            <property key="layer" type="object" isList="true">
+                <caption>Layer</caption>
+                <description/>
+                <properties>
+                    <propertyGroup caption="Layer list group">
+                        <property key="arcGISManaged" type="boolean" defaultValue="true">
+                            <caption>ArcGIS managed layer</caption>
+                            <description>Set whether ArcGIS mangaged</description>
+                        </property>
+                        <property key="layerURL" type="string">
+                            <caption>Layer URL</caption>
+                            <description>The URL of the feature layer</description>
+                        </property>
+                        <property key="layerDS" type="datasource" isList="true" required="false">
+                            <caption>Layer Datasource</caption>
+                            <description>Datasource layer</description>
+                        </property>
+                        <property key="pointType" type="enumeration" defaultValue="point">
+                            <caption>Point types</caption>
+                            <description>Types of items for Mx managed items</description>
+                            <enumerationValues>
+                                <enumerationValue key="point">point</enumerationValue>
+                                <enumerationValue key="polyline">polyline</enumerationValue>
+                                <enumerationValue key="polygon">polygon</enumerationValue>
+                            </enumerationValues>
+                        </property>
+                    </propertyGroup>
+                </properties>
             </property>
         </propertyGroup>
     </properties>

@@ -1,16 +1,23 @@
-import { Component, ReactNode, createElement } from "react";
-import { HelloWorldSample } from "./components/HelloWorldSample";
+import { ReactNode, createElement } from "react";
+import MapComponent from "./components/Map";
 import { ArcGISContainerProps } from "../typings/ArcGISProps";
-
-// import "@arcgis/core/assets/esri/themes/dark/main.css";
-// import "./ui/ArcGIS.sass";   SASS loader not working (Due to webpack?)
 import esriConfig from "@arcgis/core/config.js";
+import "./ui/ArcGIS.css";
 
 esriConfig.assetsPath = "./widgets/mendix/arcgis/assets";
-esriConfig.apiKey = "" /* Goes here */;
 
-export default class ArcGIS extends Component<ArcGISContainerProps> {
-    render(): ReactNode {
-        return <HelloWorldSample sampleText={this.props.sampleText ? this.props.sampleText : "World"} />;
-    }
+const ArcGIS = (props: ArcGISContainerProps): ReactNode => {
+
+    const {apiKey, defaultZoom, layer, basemap} = props;
+
+    esriConfig.apiKey = apiKey;
+
+    return (<MapComponent
+               defaultZoom = {defaultZoom}
+               layers = {layer}
+               basemap = {basemap}
+            />);
+    
 }
+
+export default ArcGIS;

@@ -13,7 +13,9 @@ const customConfig = {
             }),
         new CopyWebpackPlugin({
             patterns: [
-                {from: './src/assets', to:'./widgets/mendix/arcgis/assets'}
+                {from: './src/assets', to:'./widgets/mendix/arcgis/assets'},
+                {from: './src/assets/esri/themes/base/fonts', to: './widgets'},
+                {from: './src/assets/esri/themes/base/icons', to: './widgets'},
             ]
         })
     ],
@@ -26,7 +28,7 @@ const customConfig = {
                 loader: 'file-loader',
               },
             ],
-          },
+          }
         ],
       },
     
