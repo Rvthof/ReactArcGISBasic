@@ -4,11 +4,14 @@ import MapView from "@arcgis/core/views/MapView";
 import FeatureLayer from "@arcgis/core/layers/FeatureLayer"
 import { LayerType } from "../../typings/ArcGISProps";
 import Legend from "@arcgis/core/widgets/Legend";
+import { ActionValue, EditableValue } from "mendix";
 
 export interface MapProps {
     defaultZoom: number;
     layers: LayerType[];
     basemap: string;
+    onclick?: ActionValue;
+    onclickattr?: EditableValue<string>;
 }
 
 // Feature layers will not display. Tried converting the view to useState instead. Feature layers are loaded (can be seen in the network calls but are simply not shown). Have tried reording the ways
@@ -41,6 +44,23 @@ const MapComponent = (props: MapProps): ReactElement => {
 
         legend.view = view
         view.ui.add(legend, "bottom-right");
+        view.on("click", (event: MouseEvent) => {
+            const opts = {
+                include: map.layers
+            }
+            view.hitTest(event, opts).then((resp) => {
+                if (resp.results.length) {
+                    console.dir(resp);
+                    const elem = resp.results[0];
+                    props.onclickattr?.setValue(elem.graphic.attributes.objectid);
+                    const onclickaction = props.onclick;
+                    if (onclickaction) {
+                        onclickaction.execute();
+                    }
+                }
+            })
+            
+        })
 
         return view
     }

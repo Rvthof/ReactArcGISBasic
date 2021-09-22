@@ -8,7 +8,7 @@ esriConfig.assetsPath = "./widgets/mendix/arcgis/assets";
 
 const ArcGIS = (props: ArcGISContainerProps): ReactNode => {
 
-    const {apiKey, defaultZoom, layer, basemap} = props;
+    const {apiKey, defaultZoom, layer, basemap, onclick} = props;
 
     esriConfig.apiKey = apiKey;
 
@@ -16,6 +16,7 @@ const ArcGIS = (props: ArcGISContainerProps): ReactNode => {
                defaultZoom = {defaultZoom}
                layers = {layer}
                basemap = {basemap}
+               onclick = {onclick}
             />);
     
 }

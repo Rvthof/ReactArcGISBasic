@@ -20,7 +20,19 @@
                 <caption>Basemapm</caption>
                 <description>The name of the basemap you want to use</description>
             </property>
+            <property key="onclick" type="action" required="false">
+                <caption>On click action</caption>
+                <description>On click action</description>
+            </property>
+            <property key="onclickattr" type="attribute" required="false">
+                <caption>On click - Attribute</caption>
+                <description>Attribute that gets set with the clicked map item.</description>
+                	<attributeTypes>
+                        <attributeType name="String"/>
+                    </attributeTypes>
+            </property>
         </propertyGroup>
+        
         <propertyGroup caption="Data">
             <property key="layer" type="object" isList="true">
                 <caption>Layer</caption>
