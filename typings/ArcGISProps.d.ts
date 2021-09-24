@@ -4,7 +4,7 @@
  * @author Mendix UI Content Team
  */
 import { CSSProperties } from "react";
-import { ListValue } from "mendix";
+import { ActionValue, EditableValue, ListValue } from "mendix";
 
 export type PointTypeEnum = "point" | "polyline" | "polygon";
 
@@ -30,6 +30,8 @@ export interface ArcGISContainerProps {
     apiKey: string;
     defaultZoom: number;
     basemap: string;
+    onclick?: ActionValue;
+    onclickattr?: EditableValue<string>;
     layer: LayerType[];
 }
 
@@ -39,5 +41,7 @@ export interface ArcGISPreviewProps {
     apiKey: string;
     defaultZoom: number | null;
     basemap: string;
+    onclick: {} | null;
+    onclickattr: string;
     layer: LayerPreviewType[];
 }
