@@ -17,7 +17,7 @@
                 <description>Default Zoom level of map</description>
             </property>
             <property key="basemap" type="string" required="true" defaultValue="streets-vector">
-                <caption>Basemapm</caption>
+                <caption>Basemap</caption>
                 <description>The name of the basemap you want to use</description>
             </property>
             <property key="onclick" type="action" required="false">
@@ -30,6 +30,21 @@
                 	<attributeTypes>
                         <attributeType name="String"/>
                     </attributeTypes>
+            </property>
+            <property key="onclickfield" type="string" required="true" defaultValue="ObjectID">
+                <caption>On click - Field to map</caption>
+                <description>The field from ArcGIS that will be passed to the microflow.</description>
+            </property>
+        </propertyGroup>
+
+        <propertyGroup caption="Appearance">
+            <property key="width" type="integer" required="true" defaultValue="400">
+                <caption>Width</caption>
+                <description>The width of the map in pixels.</description>
+            </property>
+            <property key="height" type="integer" required="true" defaultValue="400">
+                <caption>Height</caption>
+                <description>The height of the map in pixels.</description>
             </property>
         </propertyGroup>
         
@@ -59,6 +74,10 @@
                                 <enumerationValue key="polyline">polyline</enumerationValue>
                                 <enumerationValue key="polygon">polygon</enumerationValue>
                             </enumerationValues>
+                        </property>
+                        <property key="usePopup" type="boolean" defaultValue="false">
+                            <caption>Uses ArcGIS popups</caption>
+                            <description>Clicking on a node can open an ArcGIS popup.</description>
                         </property>
                     </propertyGroup>
                 </properties>

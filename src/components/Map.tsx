@@ -5,6 +5,9 @@ import FeatureLayer from "@arcgis/core/layers/FeatureLayer"
 import { LayerType } from "../../typings/ArcGISProps";
 import Legend from "@arcgis/core/widgets/Legend";
 import { ActionValue, EditableValue } from "mendix";
+import * as popupUtils from "@arcgis/core/support/popupUtils";
+import FieldsContent from "@arcgis/core/popup/content/FieldsContent";
+import PopupTemplate from "@arcgis/core/PopupTemplate";
 
 export interface MapProps {
     defaultZoom: number;
@@ -12,6 +15,9 @@ export interface MapProps {
     basemap: string;
     onclick?: ActionValue;
     onclickattr?: EditableValue<string>;
+    onclickfield: string;
+    width: number;
+    height: number;
 }
 
 // Feature layers will not display. Tried converting the view to useState instead. Feature layers are loaded (can be seen in the network calls but are simply not shown). Have tried reording the ways
@@ -20,6 +26,7 @@ export interface MapProps {
 const MapComponent = (props: MapProps): ReactElement => {
 
     const mapDiv = useRef (null)
+    const { width, height } = props
 
     useEffect(() => {
         if (mapDiv.current) {
@@ -44,6 +51,19 @@ const MapComponent = (props: MapProps): ReactElement => {
 
         legend.view = view
         view.ui.add(legend, "bottom-right");
+
+        const layersList = map.layers;
+        
+        if (layersList != null) {
+            const firstLayer = layersList.getItemAt(0);
+
+            if (firstLayer != null) {
+                firstLayer.when(() => {
+                    view.goTo(firstLayer.fullExtent);
+                });
+            }
+        }
+
         view.on("click", (event: MouseEvent) => {
             const opts = {
                 include: map.layers
@@ -52,7 +72,7 @@ const MapComponent = (props: MapProps): ReactElement => {
                 if (resp.results.length) {
                     console.dir(resp);
                     const elem = resp.results[0];
-                    props.onclickattr?.setValue(elem.graphic.attributes.objectid);
+                    props.onclickattr?.setValue(elem.graphic.attributes[props.onclickfield]);
                     const onclickaction = props.onclick;
                     if (onclickaction) {
                         onclickaction.execute();
@@ -74,10 +94,42 @@ const MapComponent = (props: MapProps): ReactElement => {
 
                 let layerToAdd = new FeatureLayer({
                     url: layer.layerURL,
-                })
-                layerToAdd.queryObjectIds().then(function (ids) {
-                    console.log(ids);  // an array of object IDs
+                    popupEnabled: true,
+                    outFields: ["*"]
                 });
+                if (layer.usePopup) {
+                    layerToAdd.load().then(() => {
+                        let fields:string[] = [];
+                        layerToAdd.fields.map((field) => {
+                            fields.push(field.name);
+                        })
+                        const templateOptions = {
+                            ignoreFieldTypes: [""],
+                            visibleFieldNames: new Set(fields)
+                        };
+                        // Set the FieldInfo
+                        const fieldsConfig = {fields: layerToAdd.fields};
+                        
+                        // Create the FieldInfos
+                        const fieldInfos = popupUtils.createFieldInfos(fieldsConfig, templateOptions);
+                        
+                        // Sets the FieldsContent
+                        const fieldsContent = new FieldsContent({
+                            fieldInfos: fieldInfos
+                        });
+                        
+                        // Create the template and pass in the fields content
+                        const template = new PopupTemplate({
+                            title: "Site",
+                            outFields: ["*"],
+                            content: [fieldsContent]
+                        });
+                        
+                        // Set the feature layer's popup template
+                        layerToAdd.popupTemplate = template;
+                    })
+                }
+
                 console.log(`Layer Added: ${layer.layerURL} at ${i}`)
                 console.dir(layerToAdd)
 
@@ -104,7 +156,11 @@ const MapComponent = (props: MapProps): ReactElement => {
         return map
     }
 
-    return (<div id="viewDiv" ref={mapDiv} style={{ height: "500px" }} />);
+    const style = {
+        height: `${height}px`,
+        width: `${width}px`
+    }
+    return (<div id="viewDiv" ref={mapDiv} style={style} />);
 }
 
 export default MapComponent

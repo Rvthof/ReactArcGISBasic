@@ -13,6 +13,7 @@ export interface LayerType {
     layerURL: string;
     layerDS?: ListValue;
     pointType: PointTypeEnum;
+    usePopup: boolean;
 }
 
 export interface LayerPreviewType {
@@ -20,6 +21,7 @@ export interface LayerPreviewType {
     layerURL: string;
     layerDS: {} | null;
     pointType: PointTypeEnum;
+    usePopup: boolean;
 }
 
 export interface ArcGISContainerProps {
@@ -32,6 +34,9 @@ export interface ArcGISContainerProps {
     basemap: string;
     onclick?: ActionValue;
     onclickattr?: EditableValue<string>;
+    onclickfield: string;
+    width: number;
+    height: number;
     layer: LayerType[];
 }
 
@@ -43,5 +48,8 @@ export interface ArcGISPreviewProps {
     basemap: string;
     onclick: {} | null;
     onclickattr: string;
+    onclickfield: string;
+    width: number | null;
+    height: number | null;
     layer: LayerPreviewType[];
 }
